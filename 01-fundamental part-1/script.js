@@ -23,3 +23,21 @@ let job2 = "teacher";
 // this set of variable more readable
 let myFirstJob = "Programmer";
 let myCurrentJob = "teacher";
+
+// Data types in javascript
+let javaScriptIsFun = true;
+console.log(javaScriptIsFun);
+
+console.log(typeof true);
+console.log(typeof javaScriptIsFun);
+console.log(typeof 23);
+console.log(typeof "kaushik");
+
+javaScriptIsFun = "YES!";
+console.log(typeof javaScriptIsFun);
+
+let year;
+console.log(year);
+console.log(typeof year);
+
+console.log(typeof null);
