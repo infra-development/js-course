@@ -55,3 +55,28 @@ job = "teacher";
 
 lastName = "Chaudhary";
 console.log(lastName);
+
+// Math Operator
+const now = 2023;
+const ageHaresh = now - 1989;
+const agejanmejay = now - 2015;
+console.log(ageHaresh, agejanmejay);
+// 2 ** 3 means 2 to the power of 3 = 2 * 2 * 2
+
+const fName = "jaydev";
+const lName = "Bhuriay";
+console.log(fName + " " + lName);
+
+// Assignment operator
+let x = 10 + 5;
+console.log(x);
+x += 10; // 25
+x -= 4; // 21
+x++; //  x = x + 1
+x--; // x = x -1
+
+// Comparison operators
+console.log(ageHaresh > agejanmejay);
+console.log(agejanmejay >= 18);
+const isFullAge = agejanmejay >= 18;
+console.log(2023 - 1989 > 2023 - 2015);
