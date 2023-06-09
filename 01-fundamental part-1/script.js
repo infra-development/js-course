@@ -41,3 +41,17 @@ console.log(year);
 console.log(typeof year);
 
 console.log(typeof null);
+
+// let ,const and var
+let age = 23;
+age = 24;
+
+const birthdate = 2000;
+// birthdate = 1999; // const variable are immutable
+// const job;   // we can't writhe without assigning value
+
+var job = "programmer";
+job = "teacher";
+
+lastName = "Chaudhary";
+console.log(lastName);
