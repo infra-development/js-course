@@ -307,3 +307,37 @@ if (dolphins > koalas && dolphins >= 100) {
 } else {
   console.log(`No one wins`);
 }
+// The swithc statement
+const day = "Wednesday";
+
+// switch (day) {
+//   case "Monday":
+//     console.log("writing 500 code");
+//     break;
+//   case "Tuesday":
+//     console.log("writing 500 lines code");
+//     console.log("reading 5 English articals and analysing");
+//      break;
+//   case "Wednesday":
+//     console.log("codding challenges");
+//     break;
+//   case "Saturday":
+//   case "Sunday":
+//     console.log("Enjoying weekends");
+//     break;
+//   default:
+//     console.log("Not a valid input");
+// }
+
+if (day === "Monday") {
+  console.log("writing 500 code");
+} else if (day === "Tuesday") {
+  console.log("writing 500 lines code");
+  console.log("reading 5 English articals and analysing");
+} else if (day === "Wednesday") {
+  console.log("codding challenges");
+} else if (day === "Saturday" || day === "Sunday") {
+  console.log("Enjoying weekends");
+} else {
+  console.log("Not a valid input");
+}
