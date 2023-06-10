@@ -120,3 +120,25 @@ const johnBmi = johnMass / johnHeight ** 2;
 
 const markHigherBMI = markBmi > johnBmi;
 console.log(markBmi, johnBmi, markHigherBMI);
+
+const first_name = "Narendr";
+const jobs = "teacher";
+const birthyear = 1991;
+const years = 2023;
+
+const kaushik =
+  "I'm " +
+  first_name +
+  ", a " +
+  (years - birthyear) +
+  " years old " +
+  job +
+  "!";
+console.log(kaushik);
+
+const kaushikNew = `I'm ${firstName}, a ${years - birthyear} year old ${job}!`;
+console.log(kaushikNew);
+console.log(`Just a regulat string...`);
+console.log(`String
+multiple
+lines`);
