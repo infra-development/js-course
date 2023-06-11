@@ -35,3 +35,16 @@ const yearsUntilRetirement = (birthYear, firstName) => {
 
 console.log(yearsUntilRetirement(2000, "Kaushik"));
 console.log(yearsUntilRetirement(1989, "Haresh"));
+// Functrion calling ather function
+function cutFruitPieces(fruit) {
+  return fruit * 4;
+}
+const fruitProcessor = function (apples, oranges) {
+  const applesPieces = cutFruitPieces(apples);
+  const orangesPieces = cutFruitPieces(oranges);
+
+  const juice = `Juice with ${applesPieces} piece of apples and ${orangesPieces} piece of Oranges.`;
+  return juice;
+};
+
+console.log(fruitProcessor(2, 3));
