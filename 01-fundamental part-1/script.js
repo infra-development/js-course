@@ -353,3 +353,18 @@ if (23 > 10) {
 
 const me = "kaushik";
 console.log(`I'm ${2037 - 1991} years old ${me}`);
+
+// The conditional (ternary) operator
+const age3 = 23;
+age >= 18
+  ? console.log("I like to drink wine")
+  : console.log("I like to drink water");
+age3 >= 18;
+let drink2 = age3 >= 18 ? "wine" : "water";
+if (age3 >= 18) {
+  drink2 = "wine";
+} else {
+  drink2 = "water";
+}
+console.log(drink2);
+console.log(`I like to drink ${age3 >= 18 ? "wine" : "water"}`);
