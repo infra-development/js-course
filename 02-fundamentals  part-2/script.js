@@ -181,7 +181,6 @@ const ages = [
   calcAge4(years1[years1.length - 1]),
 ];
 console.log(ages);
-
 // Basic Array Operations (Methods)
 const friends1 = ["Michael", "Steven", "Peter", "harsh"];
 
