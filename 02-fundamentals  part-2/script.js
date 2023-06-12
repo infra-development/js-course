@@ -416,3 +416,50 @@ if (mark.calcBMI() > john.calcBMI()) {
 for (let rep = 1; rep <= 10; rep++) {
   console.log(`Lifting weights repetition ${rep}`);
 }
+
+const kaushik = [
+  "Kaushik",
+  "Chaudhary",
+  2037 - 2000,
+  "teacher",
+  ["Haresh", "Naresh", "Dharmesh"],
+  true,
+];
+const types = [];
+console.log(kaushik[0]);
+console.log(kaushik[1]);
+// ...
+console.log(kaushik[4]);
+// kaushik[5]; does NOT exist
+
+for (let i = 0; i < kaushik.length; i++) {
+  // Reading from Kaushik array
+  console.log(kaushik[i], typeof kaushik[i]);
+
+  // Filling types array
+  // types [i] = typeOf kaushik[i];
+  types.push(typeof kaushik[i]);
+}
+console.log(types);
+
+const years2 = [1991, 2007, 1969, 2020];
+const ages4 = [];
+
+for (let i = 0; i < years2.length; i++) {
+  ages4.push(2037 - years2[i]);
+  console.log(years2[i], ages4[i]);
+}
+console.log(ages4);
+
+// continue and break
+console.log("---ONLY STRINGS---");
+for (let i = 0; i < kaushik.length; i++) {
+  if (typeof kaushik[i] !== "string") continue;
+  console.log(kaushik[i], typeof kaushik[i]);
+}
+
+console.log("--- BREAK WITH NUMBER ---");
+for (let i = 0; i < kaushik.length; i++) {
+  if (typeof kaushik[i] === "number") break;
+  console.log(kaushik[i], typeof kaushik[i]);
+}
