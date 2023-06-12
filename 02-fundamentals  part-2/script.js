@@ -311,3 +311,40 @@ jonas1["twitter"] = "@jonasschmedtman";
 console.log(
   `${jonas1.firstName} has ${jonas1.friends.length} friends, and his best friend is called ${jonas1.friends[0]} `
 );
+
+// Object Methods
+const jonas2 = {
+  firstName: "Jonas",
+  lastName: "Schmedtmann",
+  birthYear: 1991,
+  job: "teacher",
+  friends: ["Michael", "Peter", "Steven"],
+  hasDriversLicense: false,
+  // calcAge: function (birthYear) {
+  //   return 2037 - birthYear;
+  // },
+  // calcAge: function () {
+  //   // console.log(this);
+  //   return 2037 - this.birthYear;
+  // },
+  calcAge: function () {
+    this.age = 2037 - this.birthYear;
+    return this.age;
+  }, // this keyword
+  getSummary: function () {
+    return `${this.firstName} is a ${this.calcAge()}-year old ${
+      this.job
+    }, and he has ${this.hasDriversLicense ? "a" : "No"} driver's license`;
+  },
+};
+
+console.log(jonas2.calcAge(1991));
+console.log(jonas2.age);
+console.log(jonas2.age);
+console.log(jonas2.age);
+
+// Challenge
+// "Jonas is a 46-year old teacher,
+// and he has a driver's license"
+
+console.log(jonas2.getSummary());
