@@ -181,3 +181,36 @@ const ages = [
   calcAge4(years1[years1.length - 1]),
 ];
 console.log(ages);
+
+// Basic Array Operations (Methods)
+const friends1 = ["Michael", "Steven", "Peter", "harsh"];
+
+// Add elements
+const newLength = friends1.push("Jay");
+
+console.log(friends1);
+console.log(newLength);
+
+friends1.unshift("John");
+console.log(friends1);
+
+// Remove elements
+friends1.pop(); // Last
+const popped = friends1.pop();
+console.log(popped);
+console.log(friends1);
+
+friends1.shift(); // First
+console.log(friends1);
+
+console.log(friends1.indexOf("Steven")); // 1  // index of element
+console.log(friends1.indexOf("Bob")); // -1 // not present in array so return -1
+
+friends1.push(23);
+console.log(friends1.includes("Steven")); // true
+console.log(friends1.includes("Bob")); // false
+console.log(friends1.includes("23")); // false  // includes is strict equality
+
+if (friends1.includes("Steven")) {
+  console.log("You have a friend called Steven");
+}
