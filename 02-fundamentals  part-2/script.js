@@ -462,3 +462,14 @@ for (let i = 0; i < kaushik.length; i++) {
   if (typeof kaushik[i] === "number") break;
   console.log(kaushik[i], typeof kaushik[i]);
 }
+
+for (let i = kaushik.length - 1; i >= 0; i--) {
+  console.log(kaushik[i]);
+}
+
+for (let exercies = 1; exercies <= 5; exercies++) {
+  console.log(`------ Starting Exercies  :${exercies}`);
+  for (let rep = 1; rep <= 5; rep++) {
+    console.log(`exercies ${exercies}: Lifting weight repetition ${rep}`);
+  }
+}
