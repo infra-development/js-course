@@ -15,16 +15,18 @@ const temperature = [3, -2, -6, -1, "error", 9, 13, 17, 15, 14, 9, 5];
 
 const tempAmplitude = function (arr1, arr2) {
   const temp = arr1.concat(arr2);
-  let maxt = 0;
-  let mint = 0;
+  let maxt = temp[0];
+  let mint = temp[0];
   for (let i = 0; i < temp.length; i++) {
-    if (typeof temp[i] === "string") continue;
+    if (typeof temp[i] !== "number") continue;
     maxt = temp[i] > maxt ? temp[i] : maxt;
     mint = temp[i] < mint ? temp[i] : mint;
   }
+  console.log(mint);
   return maxt - mint;
 };
-console.log(tempAmplitude(temperature, [34, 22, 33, 44]));
+// console.log(tempAmplitude(temperature, [34, 22, 33, 44]));
+console.log(tempAmplitude([34, 1, 33, 44]));
 
 // 2) Breaking up into sub-problems
 
