@@ -140,3 +140,18 @@ var addArrow = (a, b) => {
   return a + b;
 };
 addArrow(2, 5, 8);
+
+let age = 30;
+let oldAge = age;
+age = 31;
+console.log(age);
+console.log(oldAge);
+
+const me1 = {
+  name: "Kaushik",
+  age: 30,
+};
+const friend = me1;
+friend.age = 27;
+console.log("Friend", friend);
+console.log("Me", me1);
