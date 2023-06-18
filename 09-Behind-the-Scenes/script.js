@@ -68,3 +68,34 @@ const z = 3;
 console.log(x === window.x);
 console.log(y === window.y);
 console.log(z === window.z);
+
+console.log(this);
+// const calcAge1 = function (birthyear) {
+//   console.log(2037 - birthyear);
+//   console.log(this);
+// };
+const calcAge1 = (birthyear) => {
+  // Arrow function does not have own this keyword it use lexical this key word basicaly perent scope this keyword
+  console.log(2037 - birthyear);
+  console.log(this);
+};
+calcAge1(2000);
+
+const kaushik = {
+  year: 2000,
+  calcAge: function () {
+    console.log(this);
+    console.log(2037 - this.year);
+  },
+};
+kaushik.calcAge();
+
+const nayana = {
+  name: "nayana",
+  year: 1972,
+};
+
+nayana.calcAge = kaushik.calcAge;
+nayana.calcAge();
+const f = kaushik.calcAge;
+// f();
