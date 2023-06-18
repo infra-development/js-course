@@ -99,3 +99,44 @@ nayana.calcAge = kaushik.calcAge;
 nayana.calcAge();
 const f = kaushik.calcAge;
 // f();
+
+const kaushik1 = {
+  firstName: "Kaushik",
+  year: 1991,
+  calcAge: function () {
+    console.log(this);
+    // Solution 1
+    // const self = this; // self or that
+    // console.log(2037 - this.year);
+    // const isMillenial = function () {
+    //   console.log(self);
+    //   console.log(self.year >= 1981 && self.year <= 1996);
+    //   // console.log(this.yar >= 1981 && this.year <= 1996);
+    // };
+
+    // Solution 2
+    const isMillenial = () => {
+      console.log(this);
+      console.log(this.year >= 1991 && this.year <= 1996);
+    };
+    isMillenial();
+  },
+  greet: () => {
+    console.log(this);
+    console.log(`Hey ${this.firstName}`);
+  },
+};
+kaushik1.greet();
+kaushik1.calcAge();
+// arguments keyword
+const addExpr1 = function (a, b) {
+  console.log(arguments);
+  return a + b;
+};
+addExpr1(2, 5);
+addExpr1(2, 5, 8, 12);
+var addArrow = (a, b) => {
+  // console.log(arguments);
+  return a + b;
+};
+addArrow(2, 5, 8);
