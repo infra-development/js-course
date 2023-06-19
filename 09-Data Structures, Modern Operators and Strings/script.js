@@ -39,8 +39,50 @@ const restaurant = {
       `Here is your declicious pasta with ${ing1},${ing2} and ${ing3}`
     );
   },
+  orderPizza: function (mainIngredient, ...otherIngredients) {
+    console.log(mainIngredient);
+    console.log(otherIngredients);
+  },
 };
+// 1) Destructuring
+// SPREAD, BECAUSE ON RIGHT SIDE OF =
+const arr2 = [1, 2, ...[3, 4]];
 
+// REST, because on LEFT side of =
+const [d, s, ...others] = [1, 2, 3, 4, 5];
+console.log(d, s, others);
+const [pizza, , risotto, ...otherFood] = [
+  ...restaurant.mainMenu,
+  ...restaurant.starterMenu,
+];
+console.log(pizza, risotto, otherFood);
+const { sat, ...weekdays } = restaurant.openingHours;
+console.log(weekdays);
+
+const add = function (...numbers) {
+  let sum = 0;
+  for (let i = 0; i < numbers.length; i++) sum += numbers[i];
+  console.log(sum);
+};
+// Functions
+add(2, 3);
+add(2, 3, 7, 2);
+add(2, 3, 5, 3, 2, 1, 4);
+const n = [23, 5, 7];
+add(...n);
+
+restaurant.orderPizza("mushrooms", "onion", "olives", "spinach");
+restaurant.orderPizza("mushrooms");
+
+console.log("");
+console.log("");
+console.log("");
+console.log("");
+console.log("");
+console.log("");
+console.log("");
+console.log("");
+console.log("");
 // The Spread Operator(...)
 const arr1 = [7, 8, 9];
 const badNewArr = [1, 2, arr1[0], arr1[1], arr1[2]];
