@@ -73,6 +73,13 @@ add(...n);
 
 restaurant.orderPizza("mushrooms", "onion", "olives", "spinach");
 restaurant.orderPizza("mushrooms");
+restaurant.numGuests = 0;
+const guests3 = restaurant.numGuests || 10;
+console.log(guests3);
+
+// Nullish: null and undefined (NOT 0 or '')
+const guestCorrect = restaurant.numGuests ?? 10;
+console.log(guestCorrect);
 
 console.log("------OR------");
 // use ANY DATA type, return ANY data type, short- circuiting
