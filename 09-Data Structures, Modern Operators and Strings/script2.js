@@ -188,3 +188,30 @@ for (const plalyer of scored) {
   scorer[plalyer] ? scorer[plalyer]++ : (scorer[plalyer] = 1);
 }
 console.log(scorer);
+// Sets
+const ordersSet = new Set([
+  "Pasta",
+  "Pizza",
+  "Pizza",
+  "Risotto",
+  "Pasta",
+  "Pizza",
+]);
+console.log(ordersSet);
+
+console.log(new Set("Kaushik"));
+
+console.log(ordersSet.size);
+console.log(ordersSet.has("Pizza"));
+console.log(ordersSet.has("pizza"));
+ordersSet.add("Garlic Bread");
+ordersSet.add("Garlic Bread");
+ordersSet.delete("Risotto");
+console.log(ordersSet);
+for (const order of ordersSet) console.log(order);
+// Example
+const staff = ["Waiter", "Chef", "Waiter", "Manager", "Chef", "Waiter"];
+const staffUnique = [...new Set(staff)];
+console.log(staffUnique);
+console.log(new Set(staff).size); // if we only want to know how many unique value in it.
+console.log(new Set("kaushikchaudhary").size);
