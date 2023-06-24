@@ -362,6 +362,7 @@ console.log(typeof new String("Kaushik"));
 console.log(typeof new String("Kaushik").slice(1));
 console.log(new String("Kaushik").slice(1));
 
+// part-2 string
 console.log(airline.toLowerCase());
 console.log(airline.toUpperCase());
 
@@ -415,3 +416,57 @@ const checkBaggage = function (items) {
 checkBaggage("I have a laptop, some Food and a pocket Knife");
 checkBaggage("Socks and camera");
 checkBaggage("Got some snacks and a gun for protection");
+// part-3 string
+console.log("a+very+nice+string".split("+"));
+console.log("Kaushik Chaudhary".split(" "));
+const [firstName, lastName] = "Kaushik Chaudhary".split(" ");
+
+const newName = ["Mr.", firstName, lastName.toUpperCase()].join(" ");
+console.log(newName);
+const capitalizeName = function (name) {
+  name.toLowerCase();
+  const names = [];
+  for (const n of name.split(" ")) {
+    // names.push(n.slice(0, 1).toUpperCase() + n.slice(1));
+    names.push(n.replace(n[0], n[0].toUpperCase()));
+  }
+  console.log(names.join(" "));
+  // type 3
+  // let str = "";
+  // for (const cap of name.split(" ")) {
+  //   // cap.slic
+  //   str += cap.slice(0, 1).toUpperCase() + cap.slice(1) + " ";
+  // }
+  // console.log(str);
+};
+capitalizeName("kaushik chaudhary");
+capitalizeName("kaushik bhemajibhai chaudhary");
+
+// padding
+const message = "Go to gate 23!";
+console.log(message.padStart("25", "+").padEnd(30, "*"));
+console.log("Kaushik".padStart("25", "+").padEnd(30, "*"));
+
+const maskCreditCard = function (number) {
+  const str = number + "";
+  // console.log(typeof str);
+  console
+    .log
+    // str.replace(str.slice(0, str.length - 4), "*".repeat(str.length - 4))
+    ();
+  const last = str.slice(-4);
+  console.log(last.padStart(str.length, "*"));
+};
+maskCreditCard(1736288877973489);
+maskCreditCard(9427565176);
+
+// Repeat
+const message2 = "Bad waether... All Departues Delayed...";
+console.log(message2);
+
+const planesInLine = function (n) {
+  console.log(`There are ${n} planes in line ${"✈️".repeat(n)}`);
+};
+planesInLine(5);
+planesInLine(2);
+planesInLine(12);
