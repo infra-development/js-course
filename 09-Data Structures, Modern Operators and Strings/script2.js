@@ -361,3 +361,57 @@ console.log(new String("kaushik"));
 console.log(typeof new String("Kaushik"));
 console.log(typeof new String("Kaushik").slice(1));
 console.log(new String("Kaushik").slice(1));
+
+console.log(airline.toLowerCase());
+console.log(airline.toUpperCase());
+
+// Fix capitalization in name
+const passenger = "jOnAS"; // Jonas
+const passengerLower = passenger.toLowerCase();
+const passengerCorrect =
+  passengerLower[0].toUpperCase() + passengerLower.slice(1);
+console.log(passengerCorrect);
+
+// Comparing emails
+const email = "hello@jonas.io";
+const loginEmail = " Hello@Jonas.Io \n";
+// const lowerEmail = loginEmail.toLowerCase();
+// const trimmedEmail = lowerEmail.trim();
+const normalizedEmail = loginEmail.toLowerCase().trim();
+console.log(normalizedEmail);
+console.log(email === normalizedEmail);
+
+// replacing
+const priceGB = "288,97€";
+const priceUS = priceGB.replace("€", "$");
+console.log(priceGB);
+console.log(priceUS);
+
+const announcement = "All passengers to boarding door 23. Boarding door 23!";
+// console.log(announcement.replace("door", "gate"));
+// console.log(announcement.replaceAll("door", "gate"));
+console.log(announcement.replace(/door/g, "gate"));
+
+// Booleans
+const plane1 = "Airbus A320neo";
+console.log(plane1.includes("A320"));
+console.log(plane1.includes("Boeing"));
+console.log(plane1.startsWith("Airb"));
+// console.log(plane1.endsWith("s A320neo"));
+
+if (plane1.startsWith("Airbus") && plane1.endsWith("neo")) {
+  console.log("Part of the NEW ARirbus family");
+}
+
+// Practice exercise
+const checkBaggage = function (items) {
+  const baggage = items.toLowerCase();
+  if (baggage.includes("gun") || baggage.includes("knife")) {
+    console.log("You are NOT allowed on board");
+  } else {
+    console.log("Welcome aboard!");
+  }
+};
+checkBaggage("I have a laptop, some Food and a pocket Knife");
+checkBaggage("Socks and camera");
+checkBaggage("Got some snacks and a gun for protection");
