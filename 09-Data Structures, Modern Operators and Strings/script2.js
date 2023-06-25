@@ -470,3 +470,77 @@ const planesInLine = function (n) {
 planesInLine(5);
 planesInLine(2);
 planesInLine(12);
+/*
+Coding Challenge #4
+Write a program that receives a list of variable names written in underscore_case
+and convert them to camelCase.
+The input will come from a textarea inserted into the DOM (see code below to
+insert the elements), and conversion will happen when the button is pressed.
+Test data (pasted to textarea, including spaces):
+underscore_case
+first_name
+Some_Variable
+calculate_AGE
+delayed_departure
+ 
+Should produce this output (5 separate console.log outputs):
+underscoreCase
+firstName✅
+✅✅
+someVariable
+calculateAge✅✅✅
+✅✅✅✅
+delayedDeparture✅✅✅✅✅
+✅✅✅✅
+delayedDeparture✅✅✅✅✅
+Hints:
+§Remember which character defines a new line in the textarea 😉
+§The solution only needs to work for a variable made out of 2 words, like a_b
+§Start without worrying about the ✅. Tackle that only after you have the variable
+name conversion working 😉
+§
+This challenge is difficult on purpose, so start watching the solution in case
+you're stuck. Then pause and continue!
+Afterwards, test with your own test data!*/
+
+document.body.append(document.createElement("textarea"));
+document.body.append(document.createElement("button"));
+
+// document.querySelector("button").addEventListener("click", function () {
+//   const inputValue = document.querySelector("textarea").value;
+//   console.log("Hi " + inputValue);
+//   const str = inputValue;
+
+document.querySelector("button").addEventListener("click", function () {
+  const text = document.querySelector("textarea").value;
+  const rows = text.split("\n");
+  for (const [i, row] of rows.entries()) {
+    const [first, second] = row.toLowerCase().trim().split("_");
+
+    const output = `${first}${second.replace(
+      second[0],
+      second[0].toUpperCase()
+    )}`;
+    console.log(`${output.padEnd(20)}${"✅".repeat(i + 1)}`);
+  }
+});
+//   const lowerTrim = str.trim().toLowerCase();
+//   const nArr = lowerTrim.split("\n");
+//   console.log(nArr);
+//   let c = 1;
+//   for (const m of nArr) {
+//     const n = m.split("_");
+//     let firstWord = n[0];
+//     for (let i = 1; i < n.length; i++) {
+//       firstWord += n[i][0].toUpperCase() + n[i].slice(1);
+//     }
+//     console.log(firstWord.padEnd(20, " ") + "✅".repeat(c));
+//     c++;
+//     // for (const camel of nArr) {
+//     //   const i = camel.indexOf("_");
+//     //   const newStr = camel.replaceAll("_", "");
+//     //   console.log(
+//     //     newStr.slice(0, i) + newStr[i].toUpperCase() + newStr.slice(i + 1)
+//     //   );
+//   }
+// });
