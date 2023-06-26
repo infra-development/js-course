@@ -77,7 +77,7 @@ const high5 = function () {
   console.log("Hi");
 };
 
-document.body.addEventListener("click", high5);
+// document.body.addEventListener("click", high5);
 ["Jonas", "Martha", "Adam"].forEach(high5);
 
 const greet = function (greeting) {
@@ -135,3 +135,46 @@ book.apply(swiss, flightData);
 console.log(swiss);
 
 book.call(swiss, ...flightData);
+
+// Bind
+// book.call(eurowing, 23, "Sarah Williams");
+
+const bookEW = book.bind(eurowing);
+const bookLH = book.bind(lufthansa);
+const bookLX = book.bind(swiss);
+
+bookEW(33, "Mahesh Rathod");
+
+const bookEW23 = book.bind(eurowing, 23);
+bookEW23("Kaushik Chaudhary");
+bookEW23("Martha Cooper");
+
+// With Event Listeners
+lufthansa.planes = 300;
+lufthansa.buyPlane = function () {
+  console.log(this);
+  this.planes++;
+  console.log(this.planes);
+};
+// lufthansa.buyPlane();
+document
+  .querySelector(".buy")
+  .addEventListener("click", lufthansa.buyPlane.bind(lufthansa));
+
+// Partial application
+const addTax = (rate, value) => value + value * rate;
+console.log(addTax(0.1, 200));
+const addVAT = addTax.bind(null, 0.23);
+// addVAT = value => value + value * 0.23;
+
+console.log(addVAT(100));
+console.log(addVAT(23));
+
+const addTaxRate = function (rate) {
+  return function (value) {
+    return value + value * rate;
+  };
+};
+
+const addVAT2 = addTaxRate(0.23);
+console.log(addVAT2(23));
