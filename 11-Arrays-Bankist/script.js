@@ -59,6 +59,7 @@ const inputLoanAmount = document.querySelector(".form__input--loan-amount");
 const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
+// Display Moments
 const displayMovements = function (movements) {
   containerMovements.innerHTML = "";
   movements.forEach(function (mov, i) {
@@ -76,6 +77,22 @@ const displayMovements = function (movements) {
   });
 };
 displayMovements(account1.movements);
+
+// creating username for each user account
+const createUsername = function (accs) {
+  accs.forEach(
+    (acc) =>
+      (acc.userName = acc.owner
+        .toLowerCase()
+        .split(" ")
+        .map((str) => str[0])
+        .join(""))
+  );
+  // return ;
+};
+// accounts.forEach((acc) => (acc.userName = createUsername(acc.owner)));
+createUsername(accounts);
+console.log(accounts);
 
 // Simply Array Methods
 let arr = ["a", "b", "c", "d", "e"];
