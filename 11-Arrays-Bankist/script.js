@@ -83,6 +83,28 @@ const calcDisplayBalance = function (movements) {
   labelBalance.textContent = balance + " EUR";
 };
 calcDisplayBalance(account1.movements);
+
+const calcDisplaySummary = function (movements) {
+  const incomes = movements
+    .filter((mov) => mov > 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumIn.textContent = incomes;
+
+  const out = movements
+    .filter((mov) => mov < 0)
+    .reduce((acc, mov) => acc + mov, 0);
+  labelSumOut.textContent = Math.abs(out);
+
+  const interest = movements
+    .filter((mov) => mov > 0)
+    .map((mov) => (mov * 1.2) / 100)
+    .filter((int) => {
+      if (int > 1) return int;
+    })
+    .reduce((acc, int) => acc + int, 0);
+  labelSumInterest.textContent = interest;
+};
+calcDisplaySummary(account1.movements);
 // creating username for each user account
 const createUsername = function (accs) {
   accs.forEach(
@@ -297,3 +319,15 @@ console.log([5, 2, 4, 1, 15, 8, 3]);
 const age1 = calcAverageHumanAge([5, 2, 4, 1, 15, 8, 3]);
 const age2 = calcAverageHumanAge([16, 6, 10, 5, 6, 1, 4]);
 console.log(age1, age2);
+
+const eurToUsd2 = 1.1;
+// PIPLINE
+const totalDepositsUSD = movements
+  .filter((mov) => mov > 0)
+  .map((mov, i, arr) => {
+    // console.log(arr);
+    return mov * eurToUsd2;
+  })
+  // .map(mov => mov * eurToUsd2)
+  .reduce((acc, usd) => acc + usd, 0);
+console.log(Math.trunc(totalDepositsUSD));
