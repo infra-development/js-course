@@ -186,14 +186,33 @@ btnClose.addEventListener("click", function (e) {
       (acc) => acc.userName === currentUser.userName
     );
     accounts.splice(index, 1);
+
+    // Log out current-user
+    containerApp.style.opacity = 0;
   }
   // Clear Input field
   inputCloseUsername.value = inputClosePin.value = "";
   inputCloseUsername.blur();
   inputClosePin.blur();
+});
 
-  // Log out current-user
-  containerApp.style.opacity = 0;
+// Request Loan
+btnLoan.addEventListener("click", function (e) {
+  e.preventDefault();
+  const loanRequestAmount = Number(inputLoanAmount.value);
+
+  if (
+    loanRequestAmount > 0 &&
+    currentUser.movements.some((value) => value >= loanRequestAmount * 0.1)
+  ) {
+    currentUser.movements.push(loanRequestAmount);
+
+    // Update UI
+    updateUI(currentUser);
+  }
+  // clear input field
+  inputLoanAmount.value = "";
+  inputLoanAmount.blur();
 });
 
 // Simply Array Methods
@@ -435,3 +454,22 @@ console.log(account);
 for (const acc of accounts) {
   if (acc.owner === "Jessica Davis") console.log(acc);
 }
+
+// Equality
+console.log(movements.includes(-130));
+
+// Some: CONDITION
+console.log(movements.some((mov) => mov === -130));
+
+const anyDeposits = movements.some((mov) => mov > 0);
+console.log(anyDeposits);
+
+// every
+console.log(movements.every((mov) => mov > 0));
+console.log(account4.movements.every((mov) => mov > 0));
+
+// Seprate callback function
+const deposit2 = (mov) => mov > 0;
+console.log(movements.some(deposit2));
+console.log(movements.every(deposit2));
+console.log(movements.filter(deposit2));
