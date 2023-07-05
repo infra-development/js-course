@@ -473,3 +473,28 @@ const deposit2 = (mov) => mov > 0;
 console.log(movements.some(deposit2));
 console.log(movements.every(deposit2));
 console.log(movements.filter(deposit2));
+
+const arr3 = [[1, 2, 3], [4, 5, 6], 7, 8];
+console.log(arr3.flat());
+const arr4 = [[[1, 2], 3], [4, [5, 6]], 7, 8];
+console.log(arr4.flat(2));
+
+// const accountMovements = accounts.map((acc) => acc.movements);
+// console.log(accountMovements);
+// const allMovements = accountMovements.flat();
+// console.log(allMovements);
+// const overAllMovements = allMovements.reduce((acc, mov) => acc + mov, 0);
+// console.log(overAllMovements);
+
+// flat
+const overAllMovements = accounts
+  .map((acc) => acc.movements)
+  .flat(1)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overAllMovements);
+
+// flatMap : it does both map and flat(only at first level)
+const overAllMovements2 = accounts
+  .flatMap((acc) => acc.movements)
+  .reduce((acc, mov) => acc + mov, 0);
+console.log(overAllMovements2);
