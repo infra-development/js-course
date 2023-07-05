@@ -76,35 +76,35 @@ const displayMovements = function (movements) {
     containerMovements.insertAdjacentHTML("afterbegin", html);
   });
 };
-displayMovements(account1.movements);
+
 // Display Balance
 const calcDisplayBalance = function (movements) {
   const balance = movements.reduce((acc, mov) => acc + mov, 0);
   labelBalance.textContent = balance + " EUR";
 };
-calcDisplayBalance(account1.movements);
 
-const calcDisplaySummary = function (movements) {
-  const incomes = movements
+// Display Summary
+const calcDisplaySummary = function (accounts) {
+  console.log(accounts);
+  const incomes = accounts.movements
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = incomes;
 
-  const out = movements
+  const out = accounts.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = Math.abs(out);
 
-  const interest = movements
+  const interest = accounts.movements
     .filter((mov) => mov > 0)
-    .map((mov) => (mov * 1.2) / 100)
+    .map((mov) => (mov * accounts.interestRate) / 100)
     .filter((int) => {
       if (int > 1) return int;
     })
     .reduce((acc, int) => acc + int, 0);
   labelSumInterest.textContent = interest;
 };
-calcDisplaySummary(account1.movements);
 // creating username for each user account
 const createUsername = function (accs) {
   accs.forEach(
@@ -115,11 +115,35 @@ const createUsername = function (accs) {
         .map((str) => str[0])
         .join(""))
   );
-  // return ;
 };
 // accounts.forEach((acc) => (acc.userName = createUsername(acc.owner)));
 createUsername(accounts);
 console.log(accounts);
+let currentUser;
+btnLogin.addEventListener("click", function (e) {
+  e.preventDefault();
+  currentUser = accounts.find(
+    (acc) => acc.userName === inputLoginUsername.value
+  );
+  console.log(currentUser);
+  if (currentUser?.pin === Number(inputLoginPin.value)) {
+    // Display UI and Welcome message
+    containerApp.style.opacity = 100;
+    labelWelcome.textContent = `Wellcome back, ${
+      currentUser.owner.split(" ")[0]
+    }`;
+
+    //Calculate Balance and Display Balance
+    calcDisplayBalance(currentUser.movements);
+    //Calculate Summary and Display Summary
+    calcDisplaySummary(currentUser);
+    //Display Movements
+    displayMovements(currentUser.movements);
+  }
+  // Clear Input field
+  inputLoginUsername.value = inputLoginPin.value = "";
+  inputLoginPin.blur();
+});
 
 // Simply Array Methods
 let arr = ["a", "b", "c", "d", "e"];
