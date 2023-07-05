@@ -78,31 +78,31 @@ const displayMovements = function (movements) {
 };
 
 // Display Balance
-const calcDisplayBalance = function (movements) {
-  const balance = movements.reduce((acc, mov) => acc + mov, 0);
-  labelBalance.textContent = balance + " EUR";
+const calcDisplayBalance = function (acc) {
+  acc.balance = acc.movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = acc.balance + " EUR";
 };
 
 // Display Summary
-const calcDisplaySummary = function (accounts) {
-  console.log(accounts);
-  const incomes = accounts.movements
+const calcDisplaySummary = function (acc) {
+  console.log(acc);
+  const incomes = acc.movements
     .filter((mov) => mov > 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumIn.textContent = incomes;
 
-  const out = accounts.movements
+  const out = acc.movements
     .filter((mov) => mov < 0)
     .reduce((acc, mov) => acc + mov, 0);
   labelSumOut.textContent = Math.abs(out);
 
-  const interest = accounts.movements
+  const interest = acc.movements
     .filter((mov) => mov > 0)
-    .map((mov) => (mov * accounts.interestRate) / 100)
+    .map((mov) => (mov * acc.interestRate) / 100)
     .filter((int) => {
       if (int > 1) return int;
     })
-    .reduce((acc, int) => acc + int, 0);
+    .reduce((accu, int) => accu + int, 0);
   labelSumInterest.textContent = interest;
 };
 // creating username for each user account
@@ -118,8 +118,18 @@ const createUsername = function (accs) {
 };
 // accounts.forEach((acc) => (acc.userName = createUsername(acc.owner)));
 createUsername(accounts);
-console.log(accounts);
+// Update UI and Display
+const updateUI = function (acc) {
+  //Calculate Balance and Display Balance
+  calcDisplayBalance(acc);
+  //Calculate Summary and Display Summary
+  calcDisplaySummary(acc);
+  //Display Movements
+  displayMovements(acc.movements);
+};
 let currentUser;
+
+// User login callback function
 btnLogin.addEventListener("click", function (e) {
   e.preventDefault();
   currentUser = accounts.find(
@@ -132,17 +142,37 @@ btnLogin.addEventListener("click", function (e) {
     labelWelcome.textContent = `Wellcome back, ${
       currentUser.owner.split(" ")[0]
     }`;
-
-    //Calculate Balance and Display Balance
-    calcDisplayBalance(currentUser.movements);
-    //Calculate Summary and Display Summary
-    calcDisplaySummary(currentUser);
-    //Display Movements
-    displayMovements(currentUser.movements);
+    // Update UI and Display
+    updateUI(currentUser);
   }
   // Clear Input field
   inputLoginUsername.value = inputLoginPin.value = "";
+  inputLoginUsername.blur();
   inputLoginPin.blur();
+});
+
+// Transfer Amount callback function
+btnTransfer.addEventListener("click", function (e) {
+  e.preventDefault();
+  const amount = Number(inputTransferAmount.value);
+  const receiverAccount = accounts.find(
+    (acc) => acc.userName === inputTransferTo.value
+  );
+  console.log(receiverAccount);
+  if (
+    amount > 0 &&
+    receiverAccount?.userName !== currentUser.userName &&
+    amount <= currentUser.balance
+  ) {
+    currentUser.movements.push(-amount);
+    receiverAccount.movements.push(amount);
+  }
+  // Clear Input field
+  inputTransferTo.value = inputTransferAmount.value = "";
+  inputTransferTo.blur();
+  inputTransferAmount.blur();
+  // Update UI and Display
+  updateUI(currentUser);
 });
 
 // Simply Array Methods
