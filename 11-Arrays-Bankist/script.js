@@ -60,9 +60,10 @@ const inputCloseUsername = document.querySelector(".form__input--user");
 const inputClosePin = document.querySelector(".form__input--pin");
 
 // Display Moments
-const displayMovements = function (movements) {
+const displayMovements = function (movements, sort = false) {
   containerMovements.innerHTML = "";
-  movements.forEach(function (mov, i) {
+  const movs = sort ? movements.slice().sort((a, b) => a - b) : movements;
+  movs.forEach(function (mov, i) {
     const type = mov > 0 ? "deposit" : "withdrawal";
 
     const html = `
@@ -213,6 +214,14 @@ btnLoan.addEventListener("click", function (e) {
   // clear input field
   inputLoanAmount.value = "";
   inputLoanAmount.blur();
+});
+
+// Sorting callback function
+let sorted = false;
+btnSort.addEventListener("click", function (e) {
+  e.preventDefault();
+  displayMovements(currentUser.movements, !sorted);
+  sorted = !sorted;
 });
 
 // Simply Array Methods
@@ -498,3 +507,29 @@ const overAllMovements2 = accounts
   .flatMap((acc) => acc.movements)
   .reduce((acc, mov) => acc + mov, 0);
 console.log(overAllMovements2);
+const owners = ["Jonas", "zech", "Adam", "martha"];
+console.log(owners.sort());
+console.log(owners);
+
+// Numbers
+console.log(movements);
+console.log(movements.sort());
+
+// return < 0; a,b  (keep order)
+// return > 0; b,a  (switch order)
+// Ascending order
+// movements.sort((a, b) => {
+//   if (a > b) return 1;
+//   if (a < b) return -1;
+// });
+movements.sort((a, b) => a - b);
+console.log(movements);
+
+const movements2 = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// Descending Order
+// movements2.sort((a, b) => {
+//   if (a > b) return -1;
+//   if (a < b) return 1;
+// });
+movements2.sort((a, b) => b - a);
+console.log(movements2);
