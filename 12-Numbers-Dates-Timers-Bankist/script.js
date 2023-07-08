@@ -365,3 +365,34 @@ labelBalance.addEventListener("click", function () {
     }
   });
 });
+
+console.log(2 ** 53 - 1);
+console.log(Number.MAX_SAFE_INTEGER);
+console.log(2 ** 53 + 1);
+console.log(2 ** 53 + 2);
+console.log(2 ** 53 + 3);
+console.log(2 ** 53 + 4);
+
+console.log(48723934872387498942485783849n);
+console.log(BigInt(48723934872));
+
+// Operations
+console.log(10000n + 10000n);
+console.log(36286372637293823473846384n * 1000000n);
+// console.log(Math.sqrt(16n));
+
+const huge = 20282398483497238279429348473783n;
+const num = 23;
+console.log(huge * BigInt(num));
+
+// Exceptions
+console.log(20n > 15);
+console.log(20n === 20);
+console.log(typeof 20n);
+console.log(20n == 20);
+
+console.log(huge + " is REALLY big!!!");
+
+// Divisions
+console.log(11n / 3n);
+console.log(10 / 3);
