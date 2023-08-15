@@ -273,12 +273,15 @@ btnLoan.addEventListener("click", function (e) {
     amount > 0 &&
     currentAccount.movements.some((mov) => mov >= amount * 0.1)
   ) {
+
+    setTimeout(function (){
     // Add movement
     currentAccount.movements.push(amount);
     // add date
     currentAccount.movementsDates.push(new Date().toISOString());
     // Update UI
     updateUI(currentAccount);
+    },2500);
   }
   inputLoanAmount.value = "";
 });
@@ -511,3 +514,16 @@ console.log(new Intl.NumberFormat("ar-IQ",options).format(num1));
 console.log(new Intl.NumberFormat("GU-IN",options).format(num1));
 
 console.log(new Intl.NumberFormat('En-Us').format(23434732.23));
+
+const ingredients = ['olives','spinach'];
+const pizzaTimer = setTimeout((ing1,ing2) => console.log(`Here is your pizza with ${ing1} and ${ing2}.`),3000,...ingredients)
+console.log('waiting...');
+
+if(ingredients.includes('spinach')) clearTimeout(pizzaTimer);
+
+// SetInterval
+setInterval(function (){
+  const now = new Date();
+  console.log(`${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`);
+  // console.log(new Intl.DateTimeFormat('EN-In').format(now))
+},1000);
