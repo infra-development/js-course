@@ -9,7 +9,7 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 
 const openModal = function (e) {
-  e.preventDefault()
+  e.preventDefault() 
   modal.classList.remove('hidden');
   overlay.classList.remove('hidden');
 };
@@ -68,6 +68,56 @@ header.append(message);
 
 // Delete Element
 document.querySelector('.btn--close-cokie').addEventListener('click', function () {
-  // message.remove();
-  message.parentElement.removeChild(message)
+  // message.remove();    // recent way to remove element
+  message.parentElement.removeChild(message) // old way to remove element
 })
+
+// Styles
+message.style.backgroundColor = '#37383d';
+message.style.width = '120%';
+
+console.log(message.style.color);
+console.log(message.style.backgroundColor);
+
+console.log(getComputedStyle(message));
+console.log(getComputedStyle(message).height);
+
+message.style.height = Number.parseFloat(getComputedStyle(message).height, 10) + 28 + 'px';
+
+document.documentElement.style.setProperty('--color-primary', 'orangered')
+
+// Attributes
+const logo = document.querySelector('.nav__logo');
+console.log(logo.alt);
+console.log(logo.src);
+console.log(logo.className);
+
+// Non-standard
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'carstrom ');
+
+logo.alt = 'Beautiful minimalist logo';
+
+// Non-standard
+console.log(logo.designer);
+console.log(logo.getAttribute('designer'));
+logo.setAttribute('company', 'Bankist');
+
+console.log(logo.src);
+console.log(logo.getAttribute('src'));
+
+const link = document.querySelector('.nav__link--btn');
+console.log(link.href);
+console.log(link.getAttribute('href'));
+
+// Data Attributes
+console.log(logo.dataset.versionNumber);
+
+// Classes
+logo.classList.add('c','j','k');
+logo.classList.remove('c','j','k');
+logo.classList.toggle('c');
+logo.classList.contains('c'); // Not includes
+
+// Don't use
+logo.className = 'kaushik';
