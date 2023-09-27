@@ -89,6 +89,32 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
     }
 })
 
+// Tabbed component
+const tabs = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const operationContent = document.querySelectorAll('.operations__content');
+
+// clicked Element 
+tabContainer.addEventListener('click', function (e) {
+  const clicked = e.target.closest('.operations__tab');
+  console.log(clicked);
+
+  if (!clicked) return;
+
+  // Remove active classes
+  tabs.forEach(t => t.classList.remove('operations__tab--active'));
+  operationContent.forEach(oc => oc.classList.remove('operations__content--active'));
+
+
+  // Activate tab Button
+  clicked.classList.add('operations__tab--active');
+
+  // Activate operation Content
+  document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
+
+
+})
+
 
 ////////////////////////////////
 ////////////////////////////////
@@ -218,7 +244,7 @@ document.querySelector('.nav').addEventListener('click', function (e) {
   console.log('nav',e.target,e.currentTarget);
 });
 */
-
+/*
 const h1 = document.querySelector('h1');
 
 // Going downwards: child
@@ -247,3 +273,4 @@ console.log(h1.parentElement.children);
 [...h1.parentElement.children].forEach(function (el) {
   if (el !== h1) el.style.transform = 'scale(0.5)';
 })
+*/
