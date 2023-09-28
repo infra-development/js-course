@@ -6,7 +6,10 @@ const btnCloseModal = document.querySelector('.btn--close-modal');
 const btnsOpenModal = document.querySelectorAll('.btn--show-modal');
 const btnScrollTo = document.querySelector('.btn--scroll-to');
 const section1 = document.querySelector('#section--1');
-
+const tabs = document.querySelectorAll('.operations__tab');
+const tabContainer = document.querySelector('.operations__tab-container');
+const operationContent = document.querySelectorAll('.operations__content');
+const nav = document.querySelector('.nav');
 ///////////////////////////////////////
 // Modal window
 
@@ -90,9 +93,6 @@ document.querySelector('.nav__links').addEventListener('click', function (e) {
 })
 
 // Tabbed component
-const tabs = document.querySelectorAll('.operations__tab');
-const tabContainer = document.querySelector('.operations__tab-container');
-const operationContent = document.querySelectorAll('.operations__content');
 
 // clicked Element 
 tabContainer.addEventListener('click', function (e) {
@@ -115,8 +115,6 @@ tabContainer.addEventListener('click', function (e) {
 
 });
 
-const nav = document.querySelector('.nav');
-
 const handleHover = function (e) {
   if (e.target.classList.contains('nav__link')) {
     const link = e.target;
@@ -134,6 +132,28 @@ const handleHover = function (e) {
 
 nav.addEventListener('mouseover',handleHover.bind(0.5));
 nav.addEventListener('mouseout', handleHover.bind(1));
+
+// Sticky navigation  
+// Course solution
+// const initialCoords = section1.getBoundingClientRect();
+// // console.log(initialCoords);
+
+// window.addEventListener('scroll', function () {
+//   if (window.scrollY > initialCoords.top) {
+//     nav.classList.add('sticky');
+//   } else {
+//     nav.classList.remove('sticky');
+//   }
+// });
+
+// My solution to develop this 
+window.addEventListener('scroll', function () {
+  const initialCoords = section1.getBoundingClientRect();
+  if (initialCoords.top <= 0)
+    nav.classList.add('sticky');
+  else
+    nav.classList.remove('sticky');
+});
 
 ////////////////////////////////
 ////////////////////////////////
