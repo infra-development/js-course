@@ -105,14 +105,11 @@ tabContainer.addEventListener('click', function (e) {
   tabs.forEach(t => t.classList.remove('operations__tab--active'));
   operationContent.forEach(oc => oc.classList.remove('operations__content--active'));
 
-
   // Activate tab Button
   clicked.classList.add('operations__tab--active');
 
   // Activate operation Content
   document.querySelector(`.operations__content--${clicked.dataset.tab}`).classList.add('operations__content--active');
-
-
 });
 
 const handleHover = function (e) {
@@ -180,7 +177,6 @@ const sectionAll = document.querySelectorAll('.section');
 
 const revelSection = function (entries, observer) {
   const [entry] = entries;
-  console.log(entry);
   if (!entry.isIntersecting) return;
   entry.target.classList.remove('section--hidden')
   observer.unobserve(entry.target);
@@ -195,6 +191,28 @@ sectionAll.forEach(section => {
   sectionObserver.observe(section);
   section.classList.add('section--hidden');
 });
+
+// Lazy loading images
+const imgTargets = document.querySelectorAll('img[data-src]');
+const loadImg = function (entries, observer) {
+  const [entry] = entries;
+  if (!entry.isIntersecting) return;
+  console.log(entry);
+  // Replace src with data-src
+  entry.target.src = entry.target.dataset.src;
+  entry.target.addEventListener('load', function () {
+    entry.target.classList.remove('lazy-img');
+  });
+  observer.unobserve(entry.target);
+};
+const imgObserver = new IntersectionObserver(loadImg, {
+  root: null,
+  threshold: 0,
+  rootMargin: '200px',
+});
+
+imgTargets.forEach(img => imgObserver.observe(img));
+
 ////////////////////////////////
 ////////////////////////////////
 ////////////////////////////////
