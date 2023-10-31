@@ -103,3 +103,34 @@ bmw.accelerate();
 bmw.accelerate();
 bmw.brake();
 bmw.accelerate();
+
+
+class PersonCl {
+    constructor(firstName, birthYear) {
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    }
+
+    calcAge() {
+        console.log(2023 - this.birthYear);
+    }
+
+    greet() {
+        console.log(`hey ${this.firstName}.`);
+    }
+}
+
+// PersonCl.prototype.greet = function () {
+    //     console.log(`hey ${this.firstName}.`);
+// }
+    
+const krishna = new PersonCl('Krishna', 1998);
+
+console.log(krishna.__proto__ === PersonCl.prototype);
+console.log(krishna);
+krishna.calcAge();
+krishna.greet();
+
+// 1. Classes are NOT hoisted
+// 2. Classes are first-class citizes
+// 3. Classes are executed in strict mode
