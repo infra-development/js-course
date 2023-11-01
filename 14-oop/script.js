@@ -107,7 +107,7 @@ bmw.accelerate();
 
 class PersonCl {
     constructor(firstName, birthYear) {
-        this.firstName = firstName;
+        this.fullName = firstName;
         this.birthYear = birthYear;
     }
 
@@ -118,13 +118,32 @@ class PersonCl {
     greet() {
         console.log(`hey ${this.firstName}.`);
     }
+
+    get age() {
+        return 2023 - this.birthYear;
+    }
+
+    // Set a property that already exists
+    set fullName(name) {
+        console.log(name);
+        if (name.includes(' ')) this._fullName = name;
+        else alert(`${name} is not a full Name`)
+    }
+
+    get fullName() {
+        return this._fullName;
+    }
 }
+const piyush = new PersonCl('Piyush patel', 1995);
+
+const krishna = new PersonCl('Krishna chaudhary', 1998);
+console.log(krishna.age);
+console.log('//////////');
+// krishna.fullName = 'krishna chaudhary';
 
 // PersonCl.prototype.greet = function () {
     //     console.log(`hey ${this.firstName}.`);
 // }
-    
-const krishna = new PersonCl('Krishna', 1998);
 
 console.log(krishna.__proto__ === PersonCl.prototype);
 console.log(krishna);
@@ -134,3 +153,19 @@ krishna.greet();
 // 1. Classes are NOT hoisted
 // 2. Classes are first-class citizes
 // 3. Classes are executed in strict mode
+
+const account = {
+    owner: "Kaushik",
+    movements: [200, 350, 322, 530, 299],
+    get letest() {
+        return this.movements.slice().pop();
+    },
+
+    set letest(mov) {
+        this.movements.push(mov);
+    }
+}
+
+console.log(account.letest);
+account.letest = 399;
+console.log(account.movements);
