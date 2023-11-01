@@ -7,6 +7,7 @@ const Person = function (firstName, birthYear) {
     // this.calcAge = function () {
     //     console.log(2037- this.birthYear);
     // }
+    
 };
 
 const kaushik = new Person('Kaushik', 2000);
@@ -110,7 +111,8 @@ class PersonCl {
         this.fullName = firstName;
         this.birthYear = birthYear;
     }
-
+    // Instence Method
+    // Method will be added to .prototype property
     calcAge() {
         console.log(2023 - this.birthYear);
     }
@@ -119,6 +121,7 @@ class PersonCl {
         console.log(`hey ${this.firstName}.`);
     }
 
+    // Setter and getter method
     get age() {
         return 2023 - this.birthYear;
     }
@@ -133,11 +136,19 @@ class PersonCl {
     get fullName() {
         return this._fullName;
     }
+
+    // static method
+    static hey = function () {
+        console.log(this);
+        console.log("hey there");
+    }
 }
 const piyush = new PersonCl('Piyush patel', 1995);
 
 const krishna = new PersonCl('Krishna chaudhary', 1998);
 console.log(krishna.age);
+
+PersonCl.hey();
 console.log('//////////');
 // krishna.fullName = 'krishna chaudhary';
 
