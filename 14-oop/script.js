@@ -105,7 +105,6 @@ bmw.accelerate();
 bmw.brake();
 bmw.accelerate();
 
-
 class PersonCl {
     constructor(firstName, birthYear) {
         this.fullName = firstName;
@@ -180,3 +179,29 @@ const account = {
 console.log(account.letest);
 account.letest = 399;
 console.log(account.movements);
+
+const PersonProto = {
+    calcAge() {
+        console.log(2023 - this.birthYear);
+        this.age = 2023 - this.birthYear;
+    },
+
+    init(firstName, birthYear) {
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    },
+};
+
+const steven = Object.create(PersonProto);
+// steven.firstName = 'Steven';
+// steven.birthYear = 2001;
+steven.init('Steven', 1992);
+console.log(steven);
+steven.calcAge();
+
+console.log(PersonProto === steven.__proto__);
+
+const sarah = Object.create(PersonProto);
+sarah.init("Sarah", 2002);
+sarah.calcAge();
+console.log(sarah);
