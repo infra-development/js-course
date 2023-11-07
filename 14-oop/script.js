@@ -332,3 +332,24 @@ tesla.accelerate();
 tesla.accelerate();
 tesla.brake();
 tesla.chargeBattery(90);
+
+class studentCl extends PersonCl{
+    constructor(firstName,birthYear,course) {
+        super(firstName, birthYear)
+        this.course = course;
+    }
+
+    introduce() {
+        console.log(`My name is ${this.firstName} I'm ${this.age} and I study ${this.course}`);
+    }
+
+    calcAge() {
+        console.log(`I'm ${2023 - this.birthYear} years old, but as a student I feel more like ${2023 - this.birthYear + 10}`);
+    }
+
+}
+
+const navin = new studentCl("Navin Maheshwari", 2002, 'JavaScript');
+console.log(navin);
+navin.introduce();
+navin.calcAge();
