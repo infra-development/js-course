@@ -255,3 +255,34 @@ ford.accelerate();
 ford.accelerate();
 ford.brake();
 ford.speedUS = 50;
+
+const PersonCon = function (firstName, birthYear) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+}
+
+PersonCon.prototype.calcAge = function () {
+    console.log(2023 - this.birthYear);
+}
+const Student = function (firstName, birthYear, course) {
+    PersonCon.call(this,firstName, birthYear);
+    this.course = course;
+}
+// Link prototype
+Student.prototype = Object.create(PersonCon.prototype);
+Student.prototype.introduce = function () {
+    console.log(`My name is ${this.firstName} and I study ${this.course}`);
+}
+const jay = new Student('Jay Patel', 1996, 'BCA');
+jay.introduce();
+
+console.log(jay.__proto__);
+console.log(jay.__proto__.__proto__);
+
+console.log(jay instanceof Student);
+console.log(jay instanceof PersonCon);
+console.log(jay instanceof Object);
+
+jay.calcAge();
+Student.prototype.constructor = Student;
+console.dir(Student.prototype.constructor);
