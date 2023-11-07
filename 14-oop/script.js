@@ -305,12 +305,11 @@ console.dir(Student.prototype.constructor);
 // Data car 1: 'Tesla' going at 120 km/h, with a charge of 23%
 // GOOD LUCK 😀
 
-const EV = function (make,speed,charge) {
-    Car.call(this, make, speed)
+const EV = function (make, speed, charge) {
+    Car.call(this, make, speed);
     this.charge = charge;
     console.log(`${this.make} going at speed of ${this.speed}km/h, with charge of ${this.charge}%.`);
-
-}
+};
 
 EV.prototype = Object.create(Car.prototype); 
 EV.prototype.chargeBattery = function (chargeTo) {
@@ -346,10 +345,37 @@ class studentCl extends PersonCl{
     calcAge() {
         console.log(`I'm ${2023 - this.birthYear} years old, but as a student I feel more like ${2023 - this.birthYear + 10}`);
     }
-
 }
 
 const navin = new studentCl("Navin Maheshwari", 2002, 'JavaScript');
 console.log(navin);
 navin.introduce();
 navin.calcAge();
+
+const PersonProtoN = {
+    calcAge() {
+         console.log(2023 - this.birthYear);
+    },
+    init(firstName, birthYear) {
+        this.firstName = firstName;
+        this.birthYear = birthYear;
+    }
+}
+
+const StudentProto = Object.create(PersonProtoN);
+StudentProto.init = function (firstName, birthYear, course) {
+    this.firstName = firstName;
+    this.birthYear = birthYear;
+    this.course = course;
+};
+
+console.log(StudentProto.__proto__);
+StudentProto.introduce = function () {
+    console.log(`My name is ${this.firstName} and I study ${this.course}`);
+};
+
+const hardik = Object.create(StudentProto);
+hardik.init("Hardik", 1998,'BCA');
+console.log(hardik);
+hardik.calcAge();
+hardik.introduce();
