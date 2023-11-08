@@ -379,3 +379,42 @@ hardik.init("Hardik", 1998,'BCA');
 console.log(hardik);
 hardik.calcAge();
 hardik.introduce();
+
+class Account {
+    constructor(owner,currency,pin) {
+        this.owner = owner;
+        this.currency = currency;
+        this.pin = pin;
+        this.movements = [];
+        this.locale = navigator.language;
+        console.log(`Thanks for opening an account, ${owner}`);       
+    }
+
+    deposit(val) {
+        this.movements.push(val)
+    }
+    withdraw(val) {
+        this.deposit(-val)
+    }
+
+    approveLoan(val) {
+        return true;
+    }
+
+    requestLoan(val) {
+        if (this.approveLoan(val)) {
+            this.deposit(val);
+            console.log(`Loan approved`);
+        }
+    }
+}
+
+const acc1 = new Account("Jonas", 'EUR', 1111);
+// acc1.movements.push(123)
+// acc1.movements.push(-321)
+acc1.deposit(123);
+acc1.requestLoan(2000);
+// acc1.approveLoan(1000);
+
+console.log(acc1);
+console.log(acc1.pin);
