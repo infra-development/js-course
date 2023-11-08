@@ -380,38 +380,55 @@ console.log(hardik);
 hardik.calcAge();
 hardik.introduce();
 
+// 1) Public fields
+// 2) private fields
+// 3) Public Method
+// 4) private Method
+// (There is also the static version)
+
 class Account {
+    // Public fields
+    locale = navigator.language;
+
+    // Private fields
+    #movements = [];
+    #pin;
     constructor(owner,currency,pin) {
         this.owner = owner;
         this.currency = currency;
         // Protected property
-        this._pin = pin;
-        this._movements = [];
-        this.locale = navigator.language;
+        this.#pin = pin;
+        // this._movements = [];
+        // this.locale = navigator.language;
         console.log(`Thanks for opening an account, ${owner}`);       
     }
+    // Public Method
     // Public interface
     getMovements() {
-        return this._movements;
+        return this.#movements;
     }
 
     deposit(val) {
-        this._movements.push(val);
+        this.#movements.push(val);
     }
 
     withdraw(val) {
         this.deposit(-val)
     }
-
-    approveLoan(val) {
-        return true;
-    }
-
+    
     requestLoan(val) {
-        if (this.approveLoan(val)) {
+        if (this._approveLoan(val)) {
             this.deposit(val);
             console.log(`Loan approved`);
         }
+    }
+
+    static helper() {
+        console.log("Helper");
+    }
+    // Private Method
+    _approveLoan(val) {
+        return true;
     }
 }
 
@@ -420,7 +437,8 @@ const acc1 = new Account("Jonas", 'EUR', 1111);
 // acc1._movements.push(-321)
 acc1.deposit(123);
 acc1.requestLoan(2000);
-// acc1.approveLoan(1000);
+// acc1._approveLoan(1000);
 
 console.log(acc1);
-console.log(acc1.pin);
+// console.log(acc1.#pin);
+Account.helper();
