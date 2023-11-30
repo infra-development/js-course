@@ -62,6 +62,8 @@ const inputDistance = document.querySelector('.form__input--distance');
 const inputDuration = document.querySelector('.form__input--duration');
 const inputCadence = document.querySelector('.form__input--cadence');
 const inputElevation = document.querySelector('.form__input--elevation');
+const updateBtn = document.querySelector('.update_btn');
+let formType = document.querySelector('input[name="new_form"]');
 
 // APPLICATION ARCHITECTURE
 class App{
@@ -79,9 +81,18 @@ class App{
 
         // Event handlers
         inputType.addEventListener('change', this._toggleElevationField);
-        form.addEventListener('submit', this._newWorkout.bind(this));
+            
+        form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            // console.log('submit happen.');
+            this._newWorkout();
+            // this._updateForm()
+        }.bind(this));
+        
         containerWorkouts.addEventListener('click', this._moveToPopup.bind(this));
-     }
+        containerWorkouts.addEventListener('dblclick', this._updateWorkout.bind(this));
+    }
+   
     _getPosition(){
         if (navigator.geolocation) {
             navigator.geolocation.getCurrentPosition(this._loadMap.bind(this), function () {
@@ -97,9 +108,11 @@ class App{
         L.tileLayer('https://tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
             attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         }).addTo(this.#map);
-        
         // Handling click on map
-        this.#map.on('click', this._showForm.bind(this));
+        this.#map.on('click', function(mapE){
+            this._showForm(mapE);
+            formType.value = 'new';
+        }.bind(this));
 
          this.#workout.forEach(work => {
             this._randerList(work);
@@ -107,7 +120,7 @@ class App{
         });
     }
     _showForm(mapE) {
-        this.#mapEvent = mapE;
+        mapE && (this.#mapEvent = mapE);
         form.classList.remove('hidden');
         inputDistance.focus();
     }
@@ -122,23 +135,24 @@ class App{
         inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
         inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
     }
-    _newWorkout(e) {
-         e.preventDefault();       
+    _validInputs(...inputs){return inputs.every(inp => Number.isFinite(inp))};
+    _allPositive(...inputs){return inputs.every(inp => inp > 0)};
+    _newWorkout() {        
+        if (document.querySelector('input[name="new_form"]').value !== 'new') {
+            return; 
+        }
         // Get data from form
         const type = inputType.value;
         const duration = +inputDuration.value;
-        const distance = +inputDistance.value;
-
+        const distance = +inputDistance.value;        
         const { lat, lng } = this.#mapEvent.latlng;
         let workout;
-        const validInputs = (...inputs) => inputs.every(inp => Number.isFinite(inp));
-        const allPositive = (...inputs) => inputs.every(inp => inp > 0);
         // if workout running, create running object
         if (type === "running") {
             const cadence = +inputCadence.value;
             // Check if data is valid
             // if (!Number.isFinite(distance) || !Number.isFinite(duration) || !Number.isFinite(cadence)) alert("Inputs have to be positive numbers");
-            if (!validInputs(duration,distance,cadence) || !allPositive(duration,distance,cadence)) return alert("Inputs have to be positive numbers");
+            if (!this._validInputs(duration,distance,cadence) || !this._allPositive(duration,distance,cadence)) return alert("Inputs have to be positive numbers");
             workout = new Running(distance, duration, [lat, lng], cadence);
         }
 
@@ -146,7 +160,7 @@ class App{
         if (type == "cycling") {
             const elevation = +inputElevation.value;
             // Check if data is valid
-            if (!validInputs(duration,distance,elevation) && !allPositive(duration,distance)) alert("Inputs have to be positive numbers");  
+            if (!this._validInputs(duration,distance,elevation) || !this._allPositive(duration,distance)) alert("Inputs have to be positive numbers");  
             workout = new Cycling(distance, duration, [lat, lng], elevation);
         }
         // Add new object to workout array
@@ -208,7 +222,7 @@ class App{
                     <span class="workout__unit">spm</span>
                 </div>
             </div>
-        `
+        `   
         }
         if (workout.type === 'cycling') {
             html += `
@@ -228,6 +242,7 @@ class App{
         form.insertAdjacentHTML('afterend', html);
     };
 
+    // Move to marker
     _moveToPopup(e) {
         const workoutEl = e.target.closest('.workout');
         if (!workoutEl) return;
@@ -240,23 +255,119 @@ class App{
         });
     }
 
+    // update functionality
+    #workEl;
+    _updateWorkout(e) {
+        this._hideForm();
+         this._showForm();
+        formType.value = 'update';
+        const workoutEl = e.target.closest('.workout');
+        if (!workoutEl) return;
+        this.#workEl = workoutEl;
+
+        const workoutK = this.#workout.find(work => work.id === workoutEl.dataset.id);
+         if (workoutK.type === "cycling") {
+            if (inputType.value === 'running') this._toggleElevationField();
+            inputType.value = workoutK.type;
+            inputElevation.value = workoutK.elevationGain;
+         }
+         if (workoutK.type === "running") {
+             if (inputType.value === 'cycling') this._toggleElevationField();
+             inputType.value = workoutK.type;
+             inputCadence.value = workoutK.cadence;
+         }
+        inputDistance.value = workoutK.distance;
+        inputDuration.value = workoutK.duration;
+        form.addEventListener('submit', this._updateFormSubmit.bind(this,workoutK));
+    }
+
+    _removeWorkoutOnList() {
+        this.#workEl.remove();
+    }
+
+    _updateFormSubmit(workoutK) {
+        console.log('this keyword 11>>',this);
+        console.log("workout object 22>>",workoutK);
+        // console.log("workout Element 33>>",workoutEl);
+        const duration = +inputDuration.value;
+        const distance = +inputDistance.value;
+        const type = inputType.value;
+        console.log(duration,distance,type);
+        function setDescription() {
+            const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+            workoutK.description = `${workoutK.type[0].toUpperCase()}${workoutK.type.slice(1)} on ${months[new Date(workoutK.date).getMonth()]} ${new Date(workoutK.date).getDate()}`;
+            return workoutK.description;
+        }
+        if (type === 'running') { // Running
+            workoutK.elevationGain && delete workoutK.elevationGain;
+            workoutK.speed && delete workoutK.speed;
+            const cadence = +inputCadence.value;
+            function calcPace(){
+                workoutK.pace = workoutK.duration / workoutK.distance;
+                return workoutK.pace;
+            };
+            console.log(this._validInputs(duration, distance, cadence));
+            console.log(this._allPositive(duration, distance, cadence));
+            if (!this._validInputs(duration, distance, cadence) || !this._allPositive(duration, distance, cadence))
+            {
+                console.log("problem occure");
+                 alert("Inputs have to be positive numbers");
+                return;
+            }
+            workoutK.cadence = cadence;
+            workoutK.pace = calcPace();
+        }
+        if (type === "cycling") { // cycling
+            workoutK.cadence && delete workoutK.cadence
+            workoutK.pace && delete workoutK.pace;
+            const elevation = +inputElevation.value;
+            if ((!this._validInputs(duration, distance, elevation)) || (!this._allPositive(duration, distance))) 
+                {
+                console.log("problem occure");
+                alert("Inputs have to be positive numbers");
+                return;
+            };
+            workoutK.elevationGain = elevation;
+            function calcSpeed(){
+                workoutK.speed = workoutK.distance / (workoutK.duration / 60);
+                return workoutK.speed;
+            }
+            workoutK.speed = calcSpeed();
+        }
+        workoutK.duration = duration;
+        workoutK.distance = distance;
+        workoutK.type = type;
+        // console.log(workoutEl);
+        // workoutEl.style.backgroundColor = "red";
+        workoutK.description = setDescription();
+        this._hideForm();
+        // workoutEl.remove(); 
+        // Randerin work on display
+        this._randerWorkoutMarker(workoutK); 
+        this._randerList(workoutK);
+        console.log(workoutK);
+        this._setLocalStorage();
+
+        this._removeWorkoutOnList();
+    };
     _setLocalStorage() {
         localStorage.setItem('workouts', JSON.stringify(this.#workout));
-    }     
+    };
 
     _getLocalStorage() {
         const data = JSON.parse(localStorage.getItem('workouts'));
         if (!data) return;
         this.#workout = data;
-        this.#workout.forEach(work => {
-            this._randerList(work);
-        });
+        // this.#workout.forEach(work => {
+        //     this._randerList(work);
+        // });
     }
 
     reset() {
         localStorage.removeItem('workouts');
         location.reload();
     }
+   
 }
 
 const app = new App();
