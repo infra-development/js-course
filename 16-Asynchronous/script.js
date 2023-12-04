@@ -41,7 +41,7 @@ const countriesContainer = document.querySelector('.countries');
 // getCountryData('portugues');
 
 ///////////////////////////////////////////////////
-
+/*
 const renderCountry = function (data, className = '') {
      const html = `
         <article class="country ${className}">
@@ -99,12 +99,23 @@ setTimeout(()=>{
     }, 1000);
   }, 1000);
 }, 1000);
-
+*/
 
 // Promise and Fetch API
 // const request = new XMLHttpRequest();
 // request.open('GET', `https://restcountries.com/v3.1/name/${countrie}`);
 // request.send();
 
-const request2 = fetch(`https://restcountries.com/v3.1/name/Bharat}`);
-console.log(request2);
+// const request2 = fetch(`https://restcountries.com/v3.1/name/Bharat}`);
+// console.log(request2);
+
+const getCountryData = function (countrie) {
+
+  fetch(`https://restcountries.com/v3.1/name/${countrie}`)
+    .then((response) => response.json())
+    .then((data) => console.log(data[0]));
+
+};
+// getCountryData('usa');
+getCountryData('portugal');
+// getCountryData('india');
