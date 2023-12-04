@@ -42,9 +42,7 @@ const countriesContainer = document.querySelector('.countries');
 
 ///////////////////////////////////////////////////
 
-let i = 0;
 const renderCountry = function (data, className = '') {
-  console.log(data,++i);
      const html = `
         <article class="country ${className}">
           <img class="country__img" src="${data.flags.png}" alt="${data.flags.alt}" />
@@ -103,3 +101,10 @@ setTimeout(()=>{
 }, 1000);
 
 
+// Promise and Fetch API
+// const request = new XMLHttpRequest();
+// request.open('GET', `https://restcountries.com/v3.1/name/${countrie}`);
+// request.send();
+
+const request2 = fetch(`https://restcountries.com/v3.1/name/Bharat}`);
+console.log(request2);
