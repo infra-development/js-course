@@ -44,7 +44,6 @@ const countriesContainer = document.querySelector('.countries');
 
 let i = 0;
 const renderCountry = function (data, className = '') {
-  
   console.log(data,++i);
      const html = `
         <article class="country ${className}">
@@ -102,3 +101,5 @@ setTimeout(()=>{
     }, 1000);
   }, 1000);
 }, 1000);
+
+
