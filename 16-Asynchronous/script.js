@@ -109,11 +109,42 @@ setTimeout(()=>{
 // const request2 = fetch(`https://restcountries.com/v3.1/name/Bharat}`);
 // console.log(request2);
 
+
+const renderCountry = function (data, className = '') {
+     const html = `
+        <article class="country ${className}">
+          <img class="country__img" src="${data.flags.png}" alt="${data.flags.alt}" />
+          <div class="country__data">
+            <h3 class="country__name">${data.name.official}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${(+data.population / 1000000).toFixed(3)}M people</p>
+            <p class="country__row"><span>🗣️</span>${[...Object.values(data.languages)]}</p>
+            <p class="country__row"><span>💰</span>${data.currencies[Object.keys(data.currencies)].name}</p>
+          </div>
+        </article>`
+
+        countriesContainer.insertAdjacentHTML('beforeend', html);
+        countriesContainer.style.opacity = '1';
+}
+
 const getCountryData = function (countrie) {
 
   fetch(`https://restcountries.com/v3.1/name/${countrie}`)
     .then((response) => response.json())
-    .then((data) => console.log(data[0]));
+    .then((data) => {
+      renderCountry(data[0]);
+      console.log(data[0]);
+      const neighbour = data[0].borders[0];
+
+      if (!neighbour) return;
+
+      return fetch(`https://restcountries.com/v3.1/alpha/${neighbour}`);
+    })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log(data[0]);
+      renderCountry(data[0], 'neighbour');
+    });
 
 };
 // getCountryData('usa');
