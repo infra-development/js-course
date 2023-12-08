@@ -109,9 +109,9 @@ const getCountryAndNeighbour = function (countrie) {
 
         request2.addEventListener('load', function () {
           const [data2] = JSON.parse(this.responseText);
-          renderCountry(data2, 'neighbour');
-        })
-    });
+          renderCountry(data2, 'neighbour'); 
+        })  
+    });   
 }; 
 getCountryAndNeighbour('usa');
 // getCountryAndNeighbour('Bharat');
@@ -255,17 +255,19 @@ getCountryData('australia');
 // §Coordinates 2: 19.037, 72.873
 // §Coordinates 3: -33.933, 18.474
 // GOOD LUCK 😀
-const btn = document.querySelector('.btn-country');
-const countriesContainer = document.querySelector('.countries');
+const btn = document.querySelector('.btn-country'); //global
+const countriesContainer = document.querySelector('.countries'); //g
 
 const resp = function (response) {
+  //read
   console.log(response);
   if (!response.ok)
-    throw new Error(`The requested location was not found: ${response.status}`);
+    throw new Error(`Problem with GeocodeAPI: ${response.status}`);
   return response.json();
 };
 
 const randerCountry = function (data) {
+  //read
   // console.log(data.currencies);
   const html = `
   <article class="country">
@@ -289,6 +291,7 @@ const randerCountry = function (data) {
   countriesContainer.insertAdjacentHTML('beforeend', html);
 };
 const reverseGeocoding = function (lat, long) {
+  // read
   fetch(`https://geocode.xyz/${lat},${long}?geoit=json`)
     // .then((response) => {
     //   console.log(response);
@@ -309,7 +312,7 @@ const reverseGeocoding = function (lat, long) {
         .then((data) => randerCountry(data[0]));
     })
     .catch((err) => {
-      console.log(`Something went wrong: ${err.message}`);
+      console.error(`Something went wrong: ${err.message}`);
       countriesContainer.insertAdjacentText(
         'beforeend',
         `Something went wrong: ${err.message}`
@@ -318,7 +321,10 @@ const reverseGeocoding = function (lat, long) {
     .finally((countriesContainer.style.opacity = '1'));
 };
 
-const inputIsValid = (latitude, longitude) =>
+const inputIsValid = (
+  latitude,
+  longitude //read
+) =>
   !isNaN(latitude) &&
   latitude >= -90 &&
   latitude <= 90 &&
@@ -327,6 +333,7 @@ const inputIsValid = (latitude, longitude) =>
   longitude <= 180;
 
 const whereAmI = function () {
+  //read
   const lat = prompt('latitude');
   const long = prompt('longitude');
   if (!inputIsValid(lat, long)) return console.log('Input is not valid');
@@ -334,4 +341,12 @@ const whereAmI = function () {
   reverseGeocoding(lat, long);
 };
 // reverseGeocoding(-33.933, 18.474);
-btn.addEventListener('click', whereAmI);
+btn.addEventListener('click', whereAmI); //call stack => web
+
+console.log('Test Start');
+setTimeout(() => console.log('0 sec timer'), 0);
+Promise.resolve('Resolved promise 1').then((res) => {
+  for (let i = 0; i < 1000000000; i++);
+  console.log(res);
+});
+console.log('Test End');
