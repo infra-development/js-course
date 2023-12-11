@@ -567,10 +567,29 @@ const whereAmI = async function () {
     if (!res.ok) throw new Error('Problem getting country name **');
     const data = await res.json();
     randerCountry(data[0]);
+
+    return `you are in ${dataGeo.city},${dataGeo.country}.`;
   } catch (err) {
     console.log(err);
     randerError(err);
+    throw err;
   }
 };
-whereAmI();
+// whereAmI();
 console.log('First');
+
+console.log('1: first get location');
+// whereAmI()
+//   .then((city) => console.log(city))
+//   .catch((err) => console.error(`2: ${err.message}`))
+//   .finally(() => console.log('3: finished getting location'));
+
+(async function () {
+  try {
+    const city = await whereAmI();
+    console.log(city);
+  } catch (err) {
+    console.error(`2: ${err.message}`);
+  }
+  console.log('3: finished getting location');
+})();
