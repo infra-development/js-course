@@ -350,3 +350,59 @@ Promise.resolve('Resolved promise 1').then((res) => {
   console.log(res);
 });
 console.log('Test End');
+
+const lotteryPromise = new Promise(function (resolve, reject) {
+  console.log('lottery draw is happening');
+  setTimeout(function () {
+    if (Math.random() >= 0.5) {
+      resolve('You win');
+    } else {
+      reject(new Error('You lost your mony'));
+    }
+  }, 2000);
+});
+
+lotteryPromise
+  .then((res) => console.log(res))
+  .catch((err) => console.error(err));
+
+const wait = function (seconds) {
+  return new Promise(function (resolve) {
+    setTimeout(resolve, seconds * 1000);
+  });
+};
+
+wait(2)
+  .then(() => {
+    console.log('I waited for 2 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 3 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 4 seconds');
+    return wait(1);
+  })
+  .then(() => {
+    console.log('I waited for 5 seconds');
+    return wait(1);
+  });
+
+// CallBack hell
+// setTimeout(()=>{
+//   console.log('1 second passed');
+//   setTimeout(()=>{
+//     console.log('2 second passed');
+//     setTimeout(()=>{
+//       console.log('3 second passed');
+//       setTimeout(()=>{
+//         console.log('4 second passed');
+//       }, 1000);
+//     }, 1000);
+//   }, 1000);
+// }, 1000);
+
+Promise.resolve('abc').then((x) => console.log(x));
+Promise.reject(new Error('abc')).catch((x) => console.error(x));
