@@ -464,7 +464,7 @@ btn.addEventListener('click', whereAmI); //call stack => web
 // image path. Set the network speed to “Fast 3G” in the dev tools Network tab,
 // otherwise images load too fast
 // GOOD LUCK 😀
-
+/*
 const imgContainer = document.querySelector('.images');
 const wait = function (secondes) {
   return new Promise(function (resolve) {
@@ -513,3 +513,54 @@ createImage('./img/img-1.jpg')
     currentImg.style.display = 'none';
   })
   .catch((err) => console.error(err));
+*/
+
+const countriesContainer = document.querySelector('.countries');
+const randerCountry = function (data) {
+  console.log(data);
+  const html = `
+  <article class="country">
+          <img class="country__img" src="${data.flags.svg}" />
+          <div class="country__data">
+            <h3 class="country__name">${data.name.official}</h3>
+            <h4 class="country__region">${data.region}</h4>
+            <p class="country__row"><span>👫</span>${(
+              data.population / 1000000
+            ).toFixed(3)}M people</p>
+            <p class="country__row"><span>🗣️</span>${
+              Object.values(data.languages)[0]
+            }</p>
+            <p class="country__row"><span>💰</span>${
+              Object.entries(data.currencies)[0][1].name
+            }</p>
+          </div>
+    </article>
+  `;
+  console.dir(html);
+  countriesContainer.insertAdjacentHTML('beforeend', html);
+  countriesContainer.style.opacity = '1';
+};
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+
+const whereAmI = async function () {
+  // Geolocation
+  const pos = await getPosition();
+  const { latitude: lat, longitude: long } = pos.coords;
+  // Reverse Geocoding
+  const resGeo = await fetch(`https://geocode.xyz/${lat},${long}?geoit=json`);
+  const dataGeo = await resGeo.json();
+
+  // Country data
+  const res = await fetch(
+    `https://restcountries.com/v3.1/name/${dataGeo.country}`
+  );
+  const data = await res.json();
+  randerCountry(data[0]);
+};
+whereAmI();
+
+console.log('First');
