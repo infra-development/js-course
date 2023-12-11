@@ -291,6 +291,7 @@ const randerCountry = function (data) {
   countriesContainer.insertAdjacentHTML('beforeend', html);
 };
 const reverseGeocoding = function (lat, long) {
+  console.log(lat, long);
   // read
   fetch(`https://geocode.xyz/${lat},${long}?geoit=json`)
     // .then((response) => {
@@ -332,16 +333,16 @@ const inputIsValid = (
   longitude >= -180 &&
   longitude <= 180;
 
-const whereAmI = function () {
-  //read
-  const lat = prompt('latitude');
-  const long = prompt('longitude');
-  if (!inputIsValid(lat, long)) return console.log('Input is not valid');
-  console.log(lat, long);
-  reverseGeocoding(lat, long);
-};
+// const whereAmI = function () {
+//   //read
+//   const lat = prompt('latitude');
+//   const long = prompt('longitude');
+//   if (!inputIsValid(lat, long)) return console.log('Input is not valid');
+//   console.log(lat, long);
+//   reverseGeocoding(lat, long);
+// };
 // reverseGeocoding(-33.933, 18.474);
-btn.addEventListener('click', whereAmI); //call stack => web
+// btn.addEventListener('click', whereAmI); //call stack => web
 
 console.log('Test Start');
 setTimeout(() => console.log('0 sec timer'), 0);
@@ -406,3 +407,28 @@ wait(2)
 
 Promise.resolve('abc').then((x) => console.log(x));
 Promise.reject(new Error('abc')).catch((x) => console.error(x));
+
+// const position = navigator.geolocation.getCurrentPosition();
+// console.log(position);
+
+const getPosition = function () {
+  return new Promise(function (resolve, reject) {
+    // navigator.geolocation.getCurrentPosition(
+    //   (position) => console.log(position),
+    //   (err) => console.err(err)
+    // );
+    navigator.geolocation.getCurrentPosition(resolve, reject);
+  });
+};
+getPosition();
+console.log(getPosition());
+getPosition().then((pos) => console.log(pos));
+
+const whereAmI = function () {
+  getPosition().then((pos) => {
+    const { latitude: lat, longitude: long } = pos.coords;
+    if (!inputIsValid(lat, long)) return console.log('Input is not valid');
+    reverseGeocoding(lat, long);
+  });
+};
+btn.addEventListener('click', whereAmI); //call stack => web
