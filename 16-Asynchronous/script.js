@@ -594,41 +594,99 @@ console.log('1: first get location');
   console.log('3: finished getting location');
 })();
 */
+// console.log(fetch(`https://restcountries.com/v3.1/name/mexico`));
+const getJson = async function (url, errMsg = '') {
+  const response = await fetch(url);
+  if (!response.ok) throw new Error(`${errMsg} ${response.status}`);
+  return await response.json();
+};
+// const get3Countries = async function (c1, c2, c3) {
+//   try {
+//     // const [data1] = await getJson(`https://restcountries.com/v3.1/name/${c1}`);
+//     // const [data2] = await getJson(`https://restcountries.com/v3.1/name/${c2}`);
+//     // const [data3] = await getJson(`https://restcountries.com/v3.1/name/${c3}`);
 
-const getJson = function (url, errMsg = '') {
-  return fetch(url).then((response) => {
-    if (!response.ok) throw new Error(`${errMsg} ${response.status}`);
-    return response.json();
+//     // console.log(await getJson(`https://restcountries.com/v3.1/name/${c1}`));
+//     const data = await Promise.all([
+//       getJson(`https://restcountries.com/v3.1/name/${c1}`),
+//       getJson(`https://restcountries.com/v3.1/name/${c2}`),
+//       getJson(`https://restcountries.com/v3.1/name/${c3}`),
+//     ]);
+//     // data.map((d) => d[0].capital);
+//     console.log(data.map((d) => d[0].capital[0]));
+//   } catch (err) {
+//     console.log(err);
+//   }
+// };
+// get3Countries('Bharat', 'mexico', 'usa');
+
+// (async function () {
+//   try {
+//     const res = await Promise.race([
+//       // new Promise(function (resolve, reject) {
+//       //   setTimeout(resolve, 499, 'one');
+//       // }),
+//       // new Promise(function (resolve, reject) {
+//       //   setTimeout(resolve, 498, 'two');
+//       // }),
+//       // getJson(`https://restcountries.com/v3.1/name/mexico`),
+//       // getJson(`https://restcountries.com/v3.1/name/Bharat`),
+//       // getJson(`https://restcountries.com/v3.1/name/japan`),
+
+//       await fetch(`https://restcountries.com/v3.1/name/mexico`),
+//       await fetch(`https://restcountries.com/v3.1/name/Bharat`),
+//       await fetch(`https://restcountries.com/v3.1/name/japan`),
+//     ]);
+//     console.log(res);
+//   } catch (err) {
+//     console.error(err.message);
+//   }
+// })();
+
+const timeout = function (sec) {
+  return new Promise(function (_, reject) {
+    setTimeout(function () {
+      reject(new Error('Request took too long'));
+    }, sec * 1000);
   });
 };
-let data1;
-const get3Countries = async function (c1, c2, c3) {
-  try {
-    // const [data1] = await getJson(`https://restcountries.com/v3.1/name/${c1}`);
-    // const [data2] = await getJson(`https://restcountries.com/v3.1/name/${c2}`);
-    // const [data3] = await getJson(`https://restcountries.com/v3.1/name/${c3}`);
+// console.log(timeout(0.3));
+Promise.race([
+  getJson(`https://restcountries.com/v3.1/name/mexico`),
+  getJson(`https://restcountries.com/v3.1/name/japan`),
+  getJson(`https://restcountries.com/v3.1/name/Bharat`),
+])
+  .then((data) => {
+    console.log(data[0]);
+  })
+  .catch((err) => {
+    console.error(err.message);
+  });
 
-    // console.log(await getJson(`https://restcountries.com/v3.1/name/${c1}`));
-    const data = await Promise.all([
-      getJson(`https://restcountries.com/v3.1/name/${c1}`),
-      getJson(`https://restcountries.com/v3.1/name/${c2}`),
-      getJson(`https://restcountries.com/v3.1/name/${c3}`),
-    ]);
-    // console.log(data);
+// var p1 = new Promise(function (resolve, reject) {
+//   setTimeout(resolve, 500, 'one');
+// });
+// var p2 = new Promise(function (resolve, reject) {
+//   setTimeout(resolve, 100, 'two');
+// });
 
-    // data.map((d) => d[0].capital);
-    console.log(data.map((d) => d[0].capital[0]));
-    // console.log(data);
+// Promise.race([p1, p2]).then(function (value) {
+//   console.log(value); // "two"
+//   // Both resolve, but p2 is faster
+// });
 
-    // data1 = data;
-    // data.map((d) => d)
-    // console.log(da);
-    // console.log('data1 ---', data1);
-    // console.log(data.map(d[0].capital));
-    // console.log([...data1.capital, data2.capital, data3.capital]);
-  } catch (err) {
-    console.log(err);
-  }
-};
-// console.log();
-get3Countries('Bharat', 'india', 'usa');
+Promise.all([
+  Promise.resolve('succses'),
+  Promise.reject('Error'),
+  Promise.resolve('Another succsess'),
+])
+  .then((data) => console.log(data))
+  .catch((err) => console.error(err));
+
+Promise.any([
+  Promise.resolve('succses'),
+  Promise.resolve('Another succsess'),
+  Promise.reject('Error'),
+])
+  .then((data) => console.log(data))
+  .catch((err) => console.error(err));
